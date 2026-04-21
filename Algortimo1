@@ -1,0 +1,80 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.Stack;
+
+/**
+ * Taller Programación III [cite: 1]
+ * Estudiante: (Tu Nombre)
+ * Carrera: Ingeniería de Software [cite: 4]
+ */
+public class TallerProgramacionIII {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Solicitar una cadena al usuario [cite: 18]
+        System.out.print("Ingrese el texto o número a evaluar: ");
+        String entradaOriginal = scanner.nextLine();
+
+        if (entradaOriginal.isEmpty()) {
+            System.out.println("La entrada no puede estar vacía.");
+            return;
+        }
+
+        // 2. Preprocesamiento: Eliminar espacios y pasar a minúsculas [cite: 19, 20]
+        String procesada = entradaOriginal.replace(" ", "").toLowerCase();
+
+        // 3. Detectar si es número o texto 
+        boolean esNumero = procesada.matches("[0-9]+");
+
+        // 4. Estructuras de datos obligatorias [cite: 13, 14, 33, 34]
+        Stack<Character> pila = new Stack<>(); // Pila: LIFO (Last In, First Out) para invertir
+        Queue<Character> cola = new LinkedList<>(); // Cola: FIFO (First In, First Out) para mantener orden
+
+        // 5. Insertar caracteres en ambas estructuras [cite: 35]
+        // No se usan métodos automáticos de inversión (como .reverse()) 
+        for (int i = 0; i < procesada.length(); i++) {
+            char c = procesada.charAt(i);
+            pila.push(c);
+            cola.add(c);
+        }
+
+        // 6. Comparar estructuras para determinar igualdad 
+        boolean coinciden = true;
+        while (!pila.isEmpty()) {
+            // Al sacar de la pila sale en orden inverso; al sacar de la cola sale en orden original
+            if (!pila.pop().equals(cola.poll())) {
+                coinciden = false;
+                break;
+            }
+        }
+
+        // 7. Mostrar el resultado final [cite: 24, 25, 26, 27]
+        if (coinciden) {
+            if (esNumero) {
+                System.out.println("Resultado: Es capicúa"); // [cite: 50]
+            } else {
+                System.out.println("Resultado: Es palíndromo"); // [cite: 45]
+            }
+        } else {
+            System.out.println("Resultado: No es palíndromo ni capicúa"); // [cite: 55]
+        }
+
+        scanner.close();
+    }
+
+    /* * [cite: 37, 38, 39, 66]
+     * ANÁLISIS DE COMPLEJIDAD TEMPORAL (BIG-O):
+     * * El algoritmo desarrollado tiene una complejidad temporal de O(n), donde 'n' es la longitud 
+     * de la cadena de entrada.
+     * * Justificación:
+     * 1. Reemplazo de espacios y minúsculas: O(n).
+     * 2. Inserción en Stack y Queue: Recorremos la cadena una vez, realizando operaciones 
+     * de tiempo constante O(1) por cada carácter: O(n).
+     * 3. Comparación de estructuras: En el peor de los casos, recorremos los 'n' elementos 
+     * extrayéndolos: O(n).
+     * * Al ser una suma de operaciones lineales (O(n) + O(n) + O(n)), la complejidad final 
+     * dominante es O(n).
+     */
+}
