@@ -1,0 +1,1 @@
+"La complejidad es $O(n)$ porque realizamos tres recorridos lineales independientes sobre la entrada de tamaño $n$: uno para limpiar el texto, otro para cargar la Pila y la Cola, y uno final para compararlas. Como no hay ciclos anidados, el tiempo de ejecución crece proporcionalmente al número de caracteres".
