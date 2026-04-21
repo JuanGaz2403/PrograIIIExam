@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class TallerProgramacionEstructuras {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("Entrada: ");
+        String texto = entrada.nextLine();
+
+        // Preprocesamiento [cite: 19, 20]
+        String procesada = "";
+        for (char c : texto.toLowerCase().toCharArray()) {
+            if (c != ' ') procesada += c;
+        }
+
+        // Estructuras requeridas [cite: 13, 14]
+        Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
+
+        // Carga de datos [cite: 35]
+        for (int i = 0; i < procesada.length(); i++) {
+            stack.push(procesada.charAt(i));
+            queue.add(procesada.charAt(i));
+        }
+
+        // Lógica de comparación [cite: 15]
+        boolean igual = true;
+        int tamano = stack.size();
+        for (int i = 0; i < tamano; i++) {
+            if (!stack.pop().equals(queue.poll())) {
+                igual = false;
+                break;
+            }
+        }
+
+        // Detección y Salida [cite: 21, 27]
+        boolean esNum = procesada.length() > 0 && Character.isDigit(procesada.charAt(0));
+        
+        if (igual) {
+            System.out.println(esNum ? "Es capicúa" : "Es palíndromo");
+        } else {
+            System.out.println("No es palíndromo ni capicúa");
+        }
+    }
+}
+/* * ANÁLISIS BIG-O:
+ * Complejidad Temporal: O(n).
+ * Razonamiento: El uso de un bucle for para limpiar la cadena es O(n). Luego, el bucle de inserción 
+ * es O(n) y el bucle de comparación es O(n). Las operaciones internas (push, add, pop, poll) 
+ * son O(1). Por lo tanto, la complejidad total es lineal O(n)[cite: 39, 66].
+ */
