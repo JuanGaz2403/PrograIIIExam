@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class TallerProgramacionModular {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese dato:");
+        String input = sc.nextLine();
+
+        // Requisito: Eliminar espacios e ignorar mayúsculas [cite: 19, 20]
+        String limpia = input.replace(" ", "").toLowerCase();
+        
+        // Requisito: Detectar si es número o texto [cite: 21]
+        boolean esNumerico = esDatoNumerico(limpia);
+        
+        // Ejecución de lógica con estructuras [cite: 12]
+        if (verificarSimetria(limpia)) {
+            System.out.println(esNumerico ? "Es capicúa" : "Es palíndromo"); [cite: 25, 26]
+        } else {
+            System.out.println("No es palíndromo ni capicúa"); [cite: 55]
+        }
+    }
+
+    // Método que usa Pila y Cola obligatoriamente [cite: 33, 34, 35]
+    public static boolean verificarSimetria(String cadena) {
+        Stack<Character> pila = new Stack<>();
+        Queue<Character> cola = new LinkedList<>();
+
+        for (char c : cadena.toCharArray()) {
+            pila.push(c);
+            cola.add(c);
+        }
+
+        while (!pila.isEmpty()) {
+            // Compara el invertido (pila) con el original (cola) [cite: 15]
+            if (pila.pop() != cola.poll()) return false;
+        }
+        return true;
+    }
+
+    public static boolean esDatoNumerico(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+}
+/* * ANÁLISIS BIG-O:
+ * Complejidad Temporal: O(n).
+ * Explicación: El método toCharArray() recorre la cadena (n), el llenado de estructuras 
+ * recorre la cadena (n) y el while de comparación recorre la cadena (n). 
+ * Como son pasos secuenciales, n + n + n = 3n, lo que simplificado es O(n)[cite: 39, 66].
+ */
